@@ -1,6 +1,9 @@
 import { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import type { Funcionario, FuncionarioRequest, StatusFuncionario } from "../types/funcionario";
+import Button from "./Button";
+import Input from "./Input";
+import Select from "./Select";
 
 interface FuncionarioFormProps {
   funcionario?: Funcionario;
@@ -61,64 +64,30 @@ export default function FuncionarioForm({ funcionario, onSubmit, loading = false
 
   return (
     <form onSubmit={handleSubmit}>
-      <p>
-        <label htmlFor="nome">Nome</label><br />
-        <input id="nome" name="nome" value={form.nome} onChange={handleChange} required />
-      </p>
-
-      <p>
-        <label htmlFor="email">E-mail</label><br />
-        <input id="email" name="email" type="email" value={form.email} onChange={handleChange} required />
-      </p>
-
-      <p>
-        <label htmlFor="telefone">Telefone (11 números)</label><br />
-        <input
-          id="telefone"
-          name="telefone"
-          value={form.telefone}
-          onChange={handleChange}
-          inputMode="numeric"
-          maxLength={11}
-          pattern="[0-9]{11}"
-          required
-        />
-      </p>
-
-      <p>
-        <label htmlFor="cargo">Cargo</label><br />
-        <input id="cargo" name="cargo" value={form.cargo} onChange={handleChange} required />
-      </p>
-
-      <p>
-        <label htmlFor="departamento">Departamento</label><br />
-        <input id="departamento" name="departamento" value={form.departamento} onChange={handleChange} required />
-      </p>
-
-      <p>
-        <label htmlFor="salario">Salário</label><br />
-        <input id="salario" name="salario" type="number" min="0.01" step="0.01" value={form.salario || ""} onChange={handleChange} required />
-      </p>
-
-      <p>
-        <label htmlFor="cidade">Cidade</label><br />
-        <input id="cidade" name="cidade" value={form.cidade} onChange={handleChange} required />
-      </p>
-
-      <p>
-        <label htmlFor="status">Status</label><br />
-        <select id="status" name="status" value={form.status} onChange={handleChange} required>
-          {statusOptions.map((option) => (
-            <option key={option.value} value={option.value}>{option.label}</option>
-          ))}
-        </select>
-      </p>
+      <Input id="nome" name="nome" label="Nome" value={form.nome} onChange={handleChange} required />
+      <Input id="email" name="email" type="email" label="E-mail" value={form.email} onChange={handleChange} required />
+      <Input
+        id="telefone"
+        name="telefone"
+        label="Telefone (11 números)"
+        value={form.telefone}
+        onChange={handleChange}
+        inputMode="numeric"
+        maxLength={11}
+        pattern="[0-9]{11}"
+        required
+      />
+      <Input id="cargo" name="cargo" label="Cargo" value={form.cargo} onChange={handleChange} required />
+      <Input id="departamento" name="departamento" label="Departamento" value={form.departamento} onChange={handleChange} required />
+      <Input id="salario" name="salario" type="number" label="Salário" min="0.01" step="0.01" value={form.salario || ""} onChange={handleChange} required />
+      <Input id="cidade" name="cidade" label="Cidade" value={form.cidade} onChange={handleChange} required />
+      <Select id="status" name="status" label="Status" value={form.status} onChange={handleChange} options={statusOptions} required />
 
       {error && <p role="alert">{error}</p>}
 
-      <button type="submit" disabled={loading}>
+      <Button type="submit" disabled={loading}>
         {loading ? "Salvando..." : "Salvar"}
-      </button>
+      </Button>
     </form>
   );
 }

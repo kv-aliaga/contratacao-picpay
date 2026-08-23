@@ -1,4 +1,5 @@
 import type { Funcionario, StatusFuncionario } from "../types/funcionario";
+import Button from "./Button";
 
 interface FuncionarioTableProps {
   funcionarios: Funcionario[];
@@ -47,9 +48,9 @@ export default function FuncionarioTable({ funcionarios, onDetalhar, onEditar, o
             <td>{currencyFormatter.format(funcionario.salario)}</td>
             <td>{statusLabels[funcionario.status]}</td>
             <td>
-              <button type="button" onClick={() => onDetalhar(funcionario.id)}>Detalhar</button>{" "}
-              <button type="button" onClick={() => onEditar(funcionario.id)}>Editar</button>{" "}
-              <button type="button" onClick={() => onExcluir(funcionario.id)}>Excluir</button>
+              <Button type="button" variant="secondary" onClick={() => onDetalhar(funcionario.id)}>Detalhar</Button>{" "}
+              <Button type="button" variant="secondary" onClick={() => onEditar(funcionario.id)}>Editar</Button>{" "}
+              <Button type="button" variant="danger" onClick={() => onExcluir(funcionario.id)}>Excluir</Button>
             </td>
           </tr>
         ))}

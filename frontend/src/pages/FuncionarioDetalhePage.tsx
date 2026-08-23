@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { funcionarioService } from "../services/funcionarioService";
 import type { Funcionario } from "../types/funcionario";
+import Button from "../components/Button";
 
 export default function FuncionarioDetalhePage() {
   const { id } = useParams();
@@ -55,8 +56,8 @@ export default function FuncionarioDetalhePage() {
             <dt>Cidade</dt><dd>{funcionario.cidade}</dd>
             <dt>Status</dt><dd>{funcionario.status}</dd>
           </dl>
-          <button type="button" onClick={() => navigate(`/funcionarios/${funcionario.id}/editar`)}>Editar</button>{" "}
-          <button type="button" onClick={() => void excluirFuncionario()}>Excluir</button>
+          <Button type="button" onClick={() => navigate(`/funcionarios/${funcionario.id}/editar`)}>Editar</Button>{" "}
+          <Button type="button" variant="danger" onClick={() => void excluirFuncionario()}>Excluir</Button>
         </section>
       )}
     </main>

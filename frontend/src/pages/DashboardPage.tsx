@@ -2,22 +2,20 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { funcionarioService } from "../services/funcionarioService";
 import type { Indicadores, StatusFuncionario } from "../types/funcionario";
+import Card from "../components/Card";
+import GraficoBarras from "../components/GraficoBarras";
+import GraficoRosca from "../components/GraficoRosca";
 
-const statusInfo: Array<{ key: keyof Pick<Indicadores, "emAnalise" | "aprovados" | "reprovados" | "contratados">; label: string; status: StatusFuncionario }> = [
-  { key: "emAnalise", label: "Em análise", status: "EM_ANALISE" },
-  { key: "aprovados", label: "Aprovados", status: "APROVADO" },
-  { key: "contratados", label: "Contratados", status: "CONTRATADO" },
-  { key: "reprovados", label: "Reprovados", status: "REPROVADO" },
+const statusInfo: Array<{ key: keyof Pick<Indicadores, "emAnalise" | "aprovados" | "reprovados" | "contratados">; label: string; status: StatusFuncionario; color: string }> = [
+  { key: "emAnalise", label: "Em análise", status: "EM_ANALISE", color: "#f3b63f" },
+  { key: "aprovados", label: "Aprovados", status: "APROVADO", color: "#21c25e" },
+  { key: "contratados", label: "Contratados", status: "CONTRATADO", color: "#1686c7" },
+  { key: "reprovados", label: "Reprovados", status: "REPROVADO", color: "#e05b5b" },
 ];
 
 function percentual(valor: number, total: number) {
   if (total === 0) return "0%";
   return `${Math.round((valor / total) * 100)}%`;
-}
-
-function percentualNumero(valor: number, total: number) {
-  if (total === 0) return 0;
-  return Math.round((valor / total) * 100);
 }
 
 export default function DashboardPage() {
@@ -42,10 +40,6 @@ export default function DashboardPage() {
   return (
     <main>
       <h1>Dashboard</h1>
-      <nav>
-        <Link to="/funcionarios">Funcionários</Link>{" | "}
-        <Link to="/funcionarios/novo">Novo funcionário</Link>
-      </nav>
 
       {loading && <p>Carregando indicadores...</p>}
       {error && <p role="alert">{error}</p>}
@@ -53,26 +47,22 @@ export default function DashboardPage() {
         <>
           <section aria-labelledby="resumo-heading">
             <h2 id="resumo-heading">Resumo da contratação</h2>
-            <article>
-              <h3>Total de funcionários</h3>
+            <Card title="Total de funcionários">
               <p>{indicadores.total}</p>
               <p>Todos os cadastros realizados</p>
-            </article>
-            <article>
-              <h3>Em análise</h3>
+            </Card>
+            <Card title="Em análise">
               <p>{indicadores.emAnalise}</p>
               <p>{percentual(indicadores.emAnalise, indicadores.total)} do total</p>
-            </article>
-            <article>
-              <h3>Aprovados</h3>
+            </Card>
+            <Card title="Aprovados">
               <p>{indicadores.aprovados}</p>
               <p>{percentual(indicadores.aprovados, indicadores.total)} do total</p>
-            </article>
-            <article>
-              <h3>Contratados</h3>
+            </Card>
+            <Card title="Contratados">
               <p>{indicadores.contratados}</p>
               <p>{percentual(indicadores.contratados, indicadores.total)} do total</p>
-            </article>
+            </Card>
           </section>
 
           <section aria-labelledby="pipeline-heading">
@@ -102,58 +92,26 @@ export default function DashboardPage() {
 
           <section aria-labelledby="graficos-heading">
             <h2 id="graficos-heading">Gráficos</h2>
-
-            <figure aria-labelledby="distribuicao-heading">
-              <figcaption id="distribuicao-heading">Distribuição por status</figcaption>
-              {statusInfo.map((item) => {
-                const quantidade = indicadores[item.key];
-                const valor = percentualNumero(quantidade, indicadores.total);
-                return (
-                  <p key={`grafico-${item.status}`}>
-                    <label htmlFor={`barra-${item.status}`}>
-                      {item.label}: {quantidade} ({valor}%)
-                    </label><br />
-                    <progress id={`barra-${item.status}`} max="100" value={valor}>
-                      {valor}%
-                    </progress>
-                  </p>
-                );
-              })}
-            </figure>
-
-            <figure aria-labelledby="desempenho-heading">
-              <figcaption id="desempenho-heading">Desempenho do processo</figcaption>
-              <p>
-                <label htmlFor="barra-aprovacao">
-                  Aprovados ou contratados: {percentual(indicadores.aprovados + indicadores.contratados, indicadores.total)}
-                </label><br />
-                <progress
-                  id="barra-aprovacao"
-                  max="100"
-                  value={percentualNumero(indicadores.aprovados + indicadores.contratados, indicadores.total)}
-                />
-              </p>
-              <p>
-                <label htmlFor="barra-reprovacao">
-                  Reprovados: {percentual(indicadores.reprovados, indicadores.total)}
-                </label><br />
-                <progress
-                  id="barra-reprovacao"
-                  max="100"
-                  value={percentualNumero(indicadores.reprovados, indicadores.total)}
-                />
-              </p>
-              <p>
-                <label htmlFor="barra-analise">
-                  Aguardando análise: {percentual(indicadores.emAnalise, indicadores.total)}
-                </label><br />
-                <progress
-                  id="barra-analise"
-                  max="100"
-                  value={percentualNumero(indicadores.emAnalise, indicadores.total)}
-                />
-              </p>
-            </figure>
+            <div className="charts-grid">
+              <GraficoBarras
+                title="Distribuição por status"
+                total={indicadores.total}
+                items={statusInfo.map((item) => ({
+                  label: item.label,
+                  value: indicadores[item.key],
+                  color: item.color,
+                }))}
+              />
+              <GraficoRosca
+                title="Composição da contratação"
+                total={indicadores.total}
+                items={statusInfo.map((item) => ({
+                  label: item.label,
+                  value: indicadores[item.key],
+                  color: item.color,
+                }))}
+              />
+            </div>
           </section>
 
           <section aria-labelledby="performance-heading">

@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import type { FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import FuncionarioTable from "../components/FuncionarioTable";
+import Button from "../components/Button";
+import Input from "../components/Input";
+import Modal from "../components/Modal";
+import Select from "../components/Select";
 import { funcionarioService } from "../services/funcionarioService";
 import type { Funcionario, FuncionarioPesquisa, StatusFuncionario } from "../types/funcionario";
 
@@ -13,6 +17,7 @@ export default function FuncionariosPage() {
   const [status, setStatus] = useState<StatusFuncionario | "">("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [funcionarioParaExcluir, setFuncionarioParaExcluir] = useState<number | null>(null);
 
   const carregarFuncionarios = useCallback(async (filtros?: FuncionarioPesquisa) => {
     try {
@@ -52,42 +57,42 @@ export default function FuncionariosPage() {
     void carregarFuncionarios();
   }
 
-  async function excluirFuncionario(id: number) {
-    if (!window.confirm("Deseja realmente excluir este funcionário?")) return;
-
+  async function confirmarExclusao() {
+    if (funcionarioParaExcluir === null) return;
     try {
-      await funcionarioService.excluir(id);
-      setFuncionarios((current) => current.filter((funcionario) => funcionario.id !== id));
+      await funcionarioService.excluir(funcionarioParaExcluir);
+      setFuncionarios((current) => current.filter((funcionario) => funcionario.id !== funcionarioParaExcluir));
     } catch {
       setError("Não foi possível excluir o funcionário.");
+    } finally {
+      setFuncionarioParaExcluir(null);
     }
   }
 
   return (
     <main>
       <h1>Funcionários</h1>
-      <p>
-        <Link to="/">Dashboard</Link>{" | "}
-        <Link to="/funcionarios/novo">Novo funcionário</Link>
-      </p>
 
       <form onSubmit={pesquisar}>
         <fieldset>
           <legend>Pesquisar</legend>
-          <label htmlFor="filtro-nome">Nome</label>{" "}
-          <input id="filtro-nome" value={nome} onChange={(event) => setNome(event.target.value)} />{" "}
-          <label htmlFor="filtro-cargo">Cargo</label>{" "}
-          <input id="filtro-cargo" value={cargo} onChange={(event) => setCargo(event.target.value)} />{" "}
-          <label htmlFor="filtro-status">Status</label>{" "}
-          <select id="filtro-status" value={status} onChange={(event) => setStatus(event.target.value as StatusFuncionario | "")}>
-            <option value="">Todos</option>
-            <option value="EM_ANALISE">Em análise</option>
-            <option value="APROVADO">Aprovado</option>
-            <option value="REPROVADO">Reprovado</option>
-            <option value="CONTRATADO">Contratado</option>
-          </select>{" "}
-          <button type="submit">Pesquisar</button>{" "}
-          <button type="button" onClick={limparPesquisa}>Limpar</button>
+          <Input id="filtro-nome" label="Nome" value={nome} onChange={(event) => setNome(event.target.value)} />
+          <Input id="filtro-cargo" label="Cargo" value={cargo} onChange={(event) => setCargo(event.target.value)} />
+          <Select
+            id="filtro-status"
+            label="Status"
+            value={status}
+            onChange={(event) => setStatus(event.target.value as StatusFuncionario | "")}
+            options={[
+              { value: "", label: "Todos" },
+              { value: "EM_ANALISE", label: "Em análise" },
+              { value: "APROVADO", label: "Aprovado" },
+              { value: "REPROVADO", label: "Reprovado" },
+              { value: "CONTRATADO", label: "Contratado" },
+            ]}
+          />
+          <Button type="submit">Pesquisar</Button>{" "}
+          <Button type="button" variant="secondary" onClick={limparPesquisa}>Limpar</Button>
         </fieldset>
       </form>
 
@@ -98,9 +103,23 @@ export default function FuncionariosPage() {
           funcionarios={funcionarios}
           onDetalhar={(id) => navigate(`/funcionarios/${id}`)}
           onEditar={(id) => navigate(`/funcionarios/${id}/editar`)}
-          onExcluir={excluirFuncionario}
+          onExcluir={(id) => setFuncionarioParaExcluir(id)}
         />
       )}
+
+      <Modal
+        isOpen={funcionarioParaExcluir !== null}
+        title="Excluir funcionário"
+        onClose={() => setFuncionarioParaExcluir(null)}
+        footer={(
+          <>
+            <Button type="button" variant="secondary" onClick={() => setFuncionarioParaExcluir(null)}>Cancelar</Button>{" "}
+            <Button type="button" variant="danger" onClick={() => void confirmarExclusao()}>Excluir</Button>
+          </>
+        )}
+      >
+        <p>Deseja realmente excluir este funcionário?</p>
+      </Modal>
     </main>
   );
 }

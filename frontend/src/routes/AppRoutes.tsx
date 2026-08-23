@@ -4,20 +4,25 @@ import FuncionariosPage from "../pages/FuncionariosPage";
 import NovoFuncionarioPage from "../pages/NovoFuncionarioPage";
 import FuncionarioDetalhePage from "../pages/FuncionarioDetalhePage";
 import EditarFuncionarioPage from "../pages/EditarFuncionarioPage";
+import Layout from "../components/Layout";
+
+function withLayout(element: React.ReactNode) {
+    return <Layout>{element}</Layout>;
+}
 
 export default function AppRoutes() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<DashboardPage/>} />
+                <Route path="/" element={withLayout(<DashboardPage/>)} />
 
-                <Route path="/funcionarios" element={<FuncionariosPage/>}/>
+                <Route path="/funcionarios" element={withLayout(<FuncionariosPage/>)} />
 
-                <Route path="/funcionarios/novo" element={<NovoFuncionarioPage/>}/>
+                <Route path="/funcionarios/novo" element={withLayout(<NovoFuncionarioPage/>)} />
 
-                <Route path="/funcionarios/:id" element={<FuncionarioDetalhePage/>}/>
+                <Route path="/funcionarios/:id" element={withLayout(<FuncionarioDetalhePage/>)} />
 
-                <Route path="/funcionarios/:id/editar" element={<EditarFuncionarioPage/>}/>
+                <Route path="/funcionarios/:id/editar" element={withLayout(<EditarFuncionarioPage/>)} />
             </Routes>
         </BrowserRouter>
     )
