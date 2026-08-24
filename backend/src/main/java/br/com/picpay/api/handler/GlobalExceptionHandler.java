@@ -23,6 +23,18 @@ public class GlobalExceptionHandler {
                 .body(new ErroResp(404, fnfe.getMessage()));
     }
 
+    @ExceptionHandler(UniqueException.class)
+    public ResponseEntity<ErroResp> handleUnique(UniqueException ue){
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ErroResp(409, "Registro já existente: " + ue.getMessage()));
+    }
+    
+    @ExceptionHandler(RegexException.class)
+    public ResponseEntity<ErroResp> handleRegex(RegexException re){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErroResp(400, "Formato inválido: " + re.getMessage()));
+    }
+
 //    Erro 400
 //    Falha no @Valid
     @ExceptionHandler(MethodArgumentNotValidException.class)
