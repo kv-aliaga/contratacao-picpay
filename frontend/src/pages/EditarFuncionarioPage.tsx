@@ -11,12 +11,10 @@ export default function EditarFuncionarioPage() {
   const [funcionario, setFuncionario] = useState<Funcionario | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     async function carregarFuncionario() {
       if (!Number.isInteger(funcionarioId)) {
-        setError("Identificador inválido.");
         setLoading(false);
         return;
       }
@@ -24,7 +22,7 @@ export default function EditarFuncionarioPage() {
       try {
         setFuncionario(await funcionarioService.buscarPorId(funcionarioId));
       } catch {
-        setError("Funcionário não encontrado.");
+        // Erros da API são exibidos pela notificação global.
       } finally {
         setLoading(false);
       }
@@ -48,7 +46,6 @@ export default function EditarFuncionarioPage() {
       <h1>Editar funcionário</h1>
       <p><Link to="/funcionarios">Voltar para funcionários</Link></p>
       {loading && <p>Carregando...</p>}
-      {error && <p role="alert">{error}</p>}
       {funcionario && <FuncionarioForm funcionario={funcionario} onSubmit={salvarFuncionario} loading={saving} />}
     </main>
   );

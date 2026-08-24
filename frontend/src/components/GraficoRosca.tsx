@@ -23,6 +23,7 @@ export default function GraficoRosca({ title, items, total }: GraficoRoscaProps)
   return (
     <figure className="chart-card">
       <figcaption id={titleId}>{title}</figcaption>
+      <p className="chart-card__description">Distribuição dos cadastros por status atual.</p>
       <svg className="chart-donut" viewBox="0 0 520 250" role="img" aria-labelledby={titleId}>
         <title>{title}</title>
         <circle className="chart-donut-background" cx={centerX} cy={centerY} r={radius} />

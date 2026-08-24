@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import FuncionarioTable from "../components/FuncionarioTable";
 import Button from "../components/Button";
 import Input from "../components/Input";
@@ -9,14 +9,23 @@ import Select from "../components/Select";
 import { funcionarioService } from "../services/funcionarioService";
 import type { Funcionario, FuncionarioPesquisa, StatusFuncionario } from "../types/funcionario";
 
+function lerStatus(value: string | null): StatusFuncionario | "" {
+  if (value === "EM_ANALISE" || value === "APROVADO" || value === "REPROVADO" || value === "CONTRATADO") {
+    return value;
+  }
+
+  return "";
+}
+
 export default function FuncionariosPage() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchKey = searchParams.toString();
   const [funcionarios, setFuncionarios] = useState<Funcionario[]>([]);
-  const [nome, setNome] = useState("");
-  const [cargo, setCargo] = useState("");
-  const [status, setStatus] = useState<StatusFuncionario | "">("");
+  const [nome, setNome] = useState(() => searchParams.get("nome") ?? "");
+  const [cargo, setCargo] = useState(() => searchParams.get("cargo") ?? "");
+  const [status, setStatus] = useState<StatusFuncionario | "">(() => lerStatus(searchParams.get("status")));
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const [funcionarioParaExcluir, setFuncionarioParaExcluir] = useState<number | null>(null);
 
   const carregarFuncionarios = useCallback(async (filtros?: FuncionarioPesquisa) => {
@@ -25,36 +34,61 @@ export default function FuncionariosPage() {
         ? await funcionarioService.pesquisar(filtros)
         : await funcionarioService.buscar();
       setFuncionarios(resultado);
-      setError("");
     } catch {
-      setError("Não foi possível carregar os funcionários.");
+      // Erros da API são exibidos pela notificação global.
     } finally {
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    // O carregamento inicial precisa acontecer quando a página entra em cena.
+    const params = new URLSearchParams(searchKey);
+    const filtros: FuncionarioPesquisa = {};
+    const nomeParam = params.get("nome")?.trim();
+    const cargoParam = params.get("cargo")?.trim();
+    const statusParam = lerStatus(params.get("status"));
+
+    if (nomeParam) filtros.nome = nomeParam;
+    if (cargoParam) filtros.cargo = cargoParam;
+    if (statusParam) filtros.status = statusParam;
+
+    // A URL é a fonte do filtro inicial e precisa disparar a consulta ao entrar na página.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    void carregarFuncionarios();
-  }, [carregarFuncionarios]);
+    void carregarFuncionarios(Object.keys(filtros).length > 0 ? filtros : undefined);
+  }, [carregarFuncionarios, searchKey]);
 
   function pesquisar(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
-    setError("");
-    const filtros: FuncionarioPesquisa = {};
-    if (nome.trim()) filtros.nome = nome.trim();
-    if (cargo.trim()) filtros.cargo = cargo.trim();
-    if (status) filtros.status = status;
-    void carregarFuncionarios(filtros);
+    const params = new URLSearchParams();
+    if (nome.trim()) params.set("nome", nome.trim());
+    if (cargo.trim()) params.set("cargo", cargo.trim());
+    if (status) params.set("status", status);
+
+    if (params.toString() === searchKey) {
+      const filtros: FuncionarioPesquisa = {};
+      if (nome.trim()) filtros.nome = nome.trim();
+      if (cargo.trim()) filtros.cargo = cargo.trim();
+      if (status) filtros.status = status;
+      void carregarFuncionarios(Object.keys(filtros).length > 0 ? filtros : undefined);
+      return;
+    }
+
+    setSearchParams(params, { replace: true });
   }
 
   function limparPesquisa() {
     setNome("");
     setCargo("");
     setStatus("");
-    void carregarFuncionarios();
+    setLoading(true);
+
+    if (!searchKey) {
+      void carregarFuncionarios();
+      return;
+    }
+
+    setSearchParams({}, { replace: true });
   }
 
   async function confirmarExclusao() {
@@ -63,7 +97,7 @@ export default function FuncionariosPage() {
       await funcionarioService.excluir(funcionarioParaExcluir);
       setFuncionarios((current) => current.filter((funcionario) => funcionario.id !== funcionarioParaExcluir));
     } catch {
-      setError("Não foi possível excluir o funcionário.");
+      // Erros da API são exibidos pela notificação global.
     } finally {
       setFuncionarioParaExcluir(null);
     }
@@ -73,11 +107,11 @@ export default function FuncionariosPage() {
     <main>
       <h1>Funcionários</h1>
 
-      <form onSubmit={pesquisar}>
+      <form className="employee-filters" onSubmit={pesquisar}>
         <fieldset>
           <legend>Pesquisar</legend>
-          <Input id="filtro-nome" label="Nome" value={nome} onChange={(event) => setNome(event.target.value)} />
-          <Input id="filtro-cargo" label="Cargo" value={cargo} onChange={(event) => setCargo(event.target.value)} />
+          <Input id="filtro-nome" label="Nome" value={nome} onChange={(event) => setNome(event.target.value)} placeholder="Ex.: João" />
+          <Input id="filtro-cargo" label="Cargo" value={cargo} onChange={(event) => setCargo(event.target.value)} placeholder="Ex.: Desenvolvedor" />
           <Select
             id="filtro-status"
             label="Status"
@@ -91,14 +125,13 @@ export default function FuncionariosPage() {
               { value: "CONTRATADO", label: "Contratado" },
             ]}
           />
-          <Button type="submit">Pesquisar</Button>{" "}
+          <Button type="submit">Pesquisar</Button>
           <Button type="button" variant="secondary" onClick={limparPesquisa}>Limpar</Button>
         </fieldset>
       </form>
 
       {loading && <p>Carregando funcionários...</p>}
-      {error && <p role="alert">{error}</p>}
-      {!loading && !error && (
+      {!loading && (
         <FuncionarioTable
           funcionarios={funcionarios}
           onDetalhar={(id) => navigate(`/funcionarios/${id}`)}

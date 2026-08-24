@@ -12,7 +12,7 @@ export default function NovoFuncionarioPage() {
   }
 
   return (
-    <main>
+    <main className="new-employee-page">
       <h1>Novo funcionário</h1>
       <p><Link to="/funcionarios">Voltar para funcionários</Link></p>
       <FuncionarioForm onSubmit={criarFuncionario} />
