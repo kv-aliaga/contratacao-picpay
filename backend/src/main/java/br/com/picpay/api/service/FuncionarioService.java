@@ -1,5 +1,12 @@
 package br.com.picpay.api.service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
 import br.com.picpay.api.dto.FuncionarioReq;
 import br.com.picpay.api.dto.FuncionarioResp;
 import br.com.picpay.api.dto.IndicadoresResp;
@@ -7,23 +14,20 @@ import br.com.picpay.api.handler.FuncionarioNotFoundException;
 import br.com.picpay.api.mapper.FuncionarioMapper;
 import br.com.picpay.api.model.Funcionario;
 import br.com.picpay.api.model.Status;
+import br.com.picpay.api.validation.FuncionarioValidation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class FuncionarioService {
     private Long ultimoId = 0L;
     private final FuncionarioMapper mapper;
+    private final FuncionarioValidation validation;
     private final List<Funcionario> funcionarios = new ArrayList<>();
 
     public FuncionarioResp inserir(FuncionarioReq dto){
         Funcionario funcionario = mapper.toEntity(dto);
+        validation.validarDadosContato(dto.email(), dto.telefone(), null, funcionarios);
 
         funcionario.setId(gerarId());
         funcionarios.add(funcionario);
@@ -44,6 +48,7 @@ public class FuncionarioService {
 
     public FuncionarioResp atualizar(Long id, FuncionarioReq dto) {
         Funcionario funcionario = getFuncionarioById(id);
+        validation.validarDadosContato(dto.email(), dto.telefone(), id, funcionarios);
 
         funcionario.setCargo(dto.cargo());
         funcionario.setNome(dto.nome());
@@ -64,10 +69,20 @@ public class FuncionarioService {
         if (campos.containsKey("nome")) funcionario.setNome((String) campos.get("nome"));
         if (campos.containsKey("cidade")) funcionario.setCidade((String) campos.get("cidade"));
         if (campos.containsKey("departamento")) funcionario.setDepartamento((String) campos.get("departamento"));
-        if (campos.containsKey("email")) funcionario.setEmail((String) campos.get("email"));
-        if (campos.containsKey("telefone")) funcionario.setTelefone((String) campos.get("telefone"));
         if (campos.containsKey("salario")) funcionario.setSalario(new BigDecimal(campos.get("salario").toString()));
         if (campos.containsKey("status")) funcionario.setStatus(Status.valueOf(campos.get("status").toString().toUpperCase()));
+
+        if (campos.containsKey("email")) {
+            String email = (String) campos.get("email");
+            validation.validarEmail(email, id, funcionarios);
+            funcionario.setEmail(email);
+        }
+
+        if (campos.containsKey("telefone")) {
+            String telefone = (String) campos.get("telefone");
+            validation.validarTelefone(telefone, id, funcionarios);
+            funcionario.setTelefone(telefone);
+        }
 
         return mapper.toResponse(funcionario);
     }
