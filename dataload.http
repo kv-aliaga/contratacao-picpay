@@ -1,0 +1,329 @@
+@baseUrl = http://localhost:8080
+
+# Carga inicial de funcionarios.
+# Execute todas as requisicoes deste arquivo com a API em funcionamento.
+
+###
+# @name cadastrarAnaSouza
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Ana Souza",
+  "email": "ana.souza@picpay.com",
+  "telefone": "11987654321",
+  "cargo": "Desenvolvedora Backend",
+  "departamento": "Tecnologia",
+  "salario": 9800.00,
+  "cidade": "Sao Paulo",
+  "status": "CONTRATADO"
+}
+
+###
+# @name cadastrarBrunoLima
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Bruno Lima",
+  "email": "bruno.lima@picpay.com",
+  "telefone": "21976543210",
+  "cargo": "Analista de Dados",
+  "departamento": "Dados",
+  "salario": 7500.00,
+  "cidade": "Rio de Janeiro",
+  "status": "APROVADO"
+}
+
+###
+# @name cadastrarCarlaMendes
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Carla Mendes",
+  "email": "carla.mendes@picpay.com",
+  "telefone": "31965432109",
+  "cargo": "Product Manager",
+  "departamento": "Produto",
+  "salario": 12000.00,
+  "cidade": "Belo Horizonte",
+  "status": "EM_ANALISE"
+}
+
+###
+# @name cadastrarDiegoAlves
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Diego Alves",
+  "email": "diego.alves@picpay.com",
+  "telefone": "41954321098",
+  "cargo": "Engenheiro DevOps",
+  "departamento": "Plataforma",
+  "salario": 11000.00,
+  "cidade": "Curitiba",
+  "status": "CONTRATADO"
+}
+
+###
+# @name cadastrarElisaRocha
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Elisa Rocha",
+  "email": "elisa.rocha@picpay.com",
+  "telefone": "51943210987",
+  "cargo": "UX Designer",
+  "departamento": "Design",
+  "salario": 7200.00,
+  "cidade": "Porto Alegre",
+  "status": "REPROVADO"
+}
+
+###
+# @name cadastrarFelipeCosta
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Felipe Costa",
+  "email": "felipe.costa@picpay.com",
+  "telefone": "61932109876",
+  "cargo": "Analista de Seguranca",
+  "departamento": "Seguranca",
+  "salario": 9400.00,
+  "cidade": "Brasilia",
+  "status": "EM_ANALISE"
+}
+
+###
+# @name cadastrarGabrielaNunes
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Gabriela Nunes",
+  "email": "gabriela.nunes@picpay.com",
+  "telefone": "71921098765",
+  "cargo": "Desenvolvedora Mobile",
+  "departamento": "Tecnologia",
+  "salario": 10200.00,
+  "cidade": "Salvador",
+  "status": "APROVADO"
+}
+
+###
+# @name cadastrarHenriqueMartins
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Henrique Martins",
+  "email": "henrique.martins@picpay.com",
+  "telefone": "81910987654",
+  "cargo": "Analista Financeiro",
+  "departamento": "Financeiro",
+  "salario": 6800.00,
+  "cidade": "Recife",
+  "status": "CONTRATADO"
+}
+
+###
+# @name cadastrarIsabelaPires
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Isabela Pires",
+  "email": "isabela.pires@picpay.com",
+  "telefone": "85909876543",
+  "cargo": "Agile Coach",
+  "departamento": "Agilidade",
+  "salario": 8900.00,
+  "cidade": "Fortaleza",
+  "status": "EM_ANALISE"
+}
+
+###
+# @name cadastrarJoaoRibeiro
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Joao Ribeiro",
+  "email": "joao.ribeiro@picpay.com",
+  "telefone": "11908765432",
+  "cargo": "QA Engineer",
+  "departamento": "Qualidade",
+  "salario": 7900.00,
+  "cidade": "Campinas",
+  "status": "REPROVADO"
+}
+
+###
+# @name cadastrarKarenOliveira
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Karen Oliveira",
+  "email": "karen.oliveira@picpay.com",
+  "telefone": "27987650123",
+  "cargo": "Tech Lead",
+  "departamento": "Tecnologia",
+  "salario": 14500.00,
+  "cidade": "Vitoria",
+  "status": "CONTRATADO"
+}
+
+###
+# @name cadastrarLucasFerreira
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Lucas Ferreira",
+  "email": "lucas.ferreira@picpay.com",
+  "telefone": "48976501234",
+  "cargo": "Desenvolvedor Frontend",
+  "departamento": "Tecnologia",
+  "salario": 9200.00,
+  "cidade": "Florianopolis",
+  "status": "APROVADO"
+}
+
+###
+# @name cadastrarMarianaBarros
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Mariana Barros",
+  "email": "mariana.barros@picpay.com",
+  "telefone": "62965401235",
+  "cargo": "Business Partner",
+  "departamento": "Pessoas",
+  "salario": 8300.00,
+  "cidade": "Goiania",
+  "status": "EM_ANALISE"
+}
+
+###
+# @name cadastrarNicolasAraujo
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Nicolas Araujo",
+  "email": "nicolas.araujo@picpay.com",
+  "telefone": "11954301236",
+  "cargo": "Cientista de Dados",
+  "departamento": "Dados",
+  "salario": 11500.00,
+  "cidade": "Sao Paulo",
+  "status": "APROVADO"
+}
+
+###
+# @name cadastrarOliviaTeixeira
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Olivia Teixeira",
+  "email": "olivia.teixeira@picpay.com",
+  "telefone": "11943201237",
+  "cargo": "Analista de Compliance",
+  "departamento": "Compliance",
+  "salario": 7600.00,
+  "cidade": "Sao Paulo",
+  "status": "REPROVADO"
+}
+
+###
+# @name cadastrarPauloFreitas
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Paulo Freitas",
+  "email": "paulo.freitas@picpay.com",
+  "telefone": "31932101238",
+  "cargo": "Arquiteto de Software",
+  "departamento": "Arquitetura",
+  "salario": 15200.00,
+  "cidade": "Belo Horizonte",
+  "status": "CONTRATADO"
+}
+
+###
+# @name cadastrarQueziaCampos
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Quezia Campos",
+  "email": "quezia.campos@picpay.com",
+  "telefone": "21921001239",
+  "cargo": "Analista de Marketing",
+  "departamento": "Marketing",
+  "salario": 6400.00,
+  "cidade": "Rio de Janeiro",
+  "status": "EM_ANALISE"
+}
+
+###
+# @name cadastrarRafaelMoraes
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Rafael Moraes",
+  "email": "rafael.moraes@picpay.com",
+  "telefone": "41910901240",
+  "cargo": "Scrum Master",
+  "departamento": "Agilidade",
+  "salario": 8500.00,
+  "cidade": "Curitiba",
+  "status": "APROVADO"
+}
+
+###
+# @name cadastrarSofiaDantas
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Sofia Dantas",
+  "email": "sofia.dantas@picpay.com",
+  "telefone": "51909801241",
+  "cargo": "Especialista de Atendimento",
+  "departamento": "Atendimento",
+  "salario": 5900.00,
+  "cidade": "Porto Alegre",
+  "status": "REPROVADO"
+}
+
+###
+# @name cadastrarThiagoCardoso
+POST {{baseUrl}}/funcionarios
+Content-Type: application/json
+
+{
+  "nome": "Thiago Cardoso",
+  "email": "thiago.cardoso@picpay.com",
+  "telefone": "11987650142",
+  "cargo": "Engenheiro de Machine Learning",
+  "departamento": "Dados",
+  "salario": 13800.00,
+  "cidade": "Sao Paulo",
+  "status": "EM_ANALISE"
+}
+
+###
+# @name conferirCarga
+GET {{baseUrl}}/funcionarios/indicadores
+Accept: application/json
