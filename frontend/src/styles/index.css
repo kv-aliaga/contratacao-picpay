@@ -2,26 +2,25 @@
 
 @theme {
   --color-picpay: #21c25e;
-  --color-picpay-bright: #00d46a;
-  --color-picpay-dark: #0e8f4c;
-  --color-picpay-soft: #e9fff1;
+  --color-picpay-dark: #0f8f4f;
+  --color-picpay-light: #e9fff1;
 
-  --color-background: #f4f6f3;
+  --color-background: #f6f7f5;
   --color-surface: #ffffff;
 
-  --color-text-primary: #151a17;
-  --color-text-secondary: #667069;
+  --color-text-primary: #171b18;
+  --color-text-secondary: #69716c;
 
-  --color-border: #e4e9e5;
+  --color-border: #e4e8e5;
 
-  --color-error: #d63845;
-  --color-error-soft: #fff0f1;
+  --color-error: #d83b4b;
+  --color-error-light: #fff0f2;
 
-  --color-success: #128e46;
-  --color-success-soft: #eafff1;
+  --color-success: #168e49;
+  --color-success-light: #eafff1;
 
-  --color-warning: #9a7000;
-  --color-warning-soft: #fff6d8;
+  --color-warning: #997100;
+  --color-warning-light: #fff7dc;
 }
 
 @layer base {
@@ -40,22 +39,6 @@
       Arial,
       Helvetica,
       sans-serif;
-  }
-
-  button,
-  input,
-  select,
-  textarea {
-    font: inherit;
-  }
-
-  button,
-  a {
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  a {
-    @apply no-underline;
   }
 
   h1,
@@ -77,23 +60,38 @@
   }
 
   h1 {
-    @apply text-3xl font-black leading-tight text-text-primary sm:text-4xl lg:text-5xl;
+    @apply text-3xl font-black leading-tight sm:text-4xl lg:text-5xl;
   }
 
   h2 {
-    @apply text-xl font-black text-text-primary sm:text-2xl;
+    @apply text-xl font-black sm:text-2xl;
   }
 
   h3 {
-    @apply text-lg font-black text-text-primary;
+    @apply text-lg font-black;
   }
 
   p {
     @apply text-sm leading-6 text-text-secondary;
   }
 
+  a {
+    @apply no-underline;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  button {
+    @apply inline-flex min-h-11 cursor-pointer items-center justify-center rounded-2xl border border-picpay bg-picpay px-5 py-3 text-sm font-black text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-picpay-dark hover:bg-picpay-dark hover:shadow-lg hover:shadow-picpay/20 focus:outline-none focus:ring-4 focus:ring-picpay/20 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
   label {
-    @apply mb-2 block text-sm font-bold text-text-primary;
+    @apply mb-2 block text-sm font-bold;
   }
 
   input,
@@ -112,44 +110,8 @@
     @apply border-error focus:border-error focus:ring-red-100;
   }
 
-  form {
-    @apply rounded-[28px] border border-border bg-white p-5 shadow-sm sm:p-6 lg:p-8;
-  }
-
-  button {
-    @apply inline-flex min-h-11 cursor-pointer items-center justify-center rounded-2xl border border-picpay bg-picpay px-5 py-3 text-sm font-black text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-picpay-dark hover:bg-picpay-dark hover:shadow-lg hover:shadow-picpay/20 focus:outline-none focus:ring-4 focus:ring-picpay/20 disabled:cursor-not-allowed disabled:opacity-50;
-  }
-
-  table {
-    @apply w-full min-w-[900px] border-collapse bg-white text-left;
-  }
-
-  thead {
-    @apply bg-[#f5f7f5];
-  }
-
-  th {
-    @apply px-5 py-4 text-[11px] font-black uppercase tracking-[0.09em] text-text-secondary;
-  }
-
-  td {
-    @apply border-t border-border px-5 py-4 text-sm text-text-primary;
-  }
-
-  tbody tr {
-    @apply transition-colors hover:bg-[#f8fbf9];
-  }
-
   main {
     @apply min-w-0 flex-1 p-4 sm:p-6 lg:p-8 xl:p-10;
-  }
-
-  main > section {
-    @apply mb-8;
-  }
-
-  main > section:last-child {
-    @apply mb-0;
   }
 }
 
@@ -159,7 +121,7 @@
   }
 
   .layout-body {
-    @apply flex min-h-[calc(100vh-74px)];
+    @apply flex min-h-[calc(100vh-72px)];
   }
 
   .layout-content {
@@ -167,7 +129,7 @@
   }
 
   .navbar {
-    @apply sticky top-0 z-50 flex min-h-[74px] items-center justify-between border-b border-black/5 bg-white px-4 sm:px-6 lg:px-8;
+    @apply sticky top-0 z-50 flex min-h-[72px] items-center justify-between border-b border-black/5 bg-white px-4 sm:px-6 lg:px-8;
   }
 
   .navbar h1,
@@ -177,11 +139,11 @@
   }
 
   .navbar button {
-    @apply flex size-11 min-h-0 items-center justify-center rounded-2xl border border-border bg-white p-0 text-xl text-text-primary shadow-none hover:border-picpay hover:bg-picpay-soft hover:text-picpay-dark lg:hidden;
+    @apply flex size-11 min-h-0 items-center justify-center rounded-2xl border border-border bg-white p-0 text-xl text-text-primary shadow-none hover:border-picpay hover:bg-picpay-light hover:text-picpay-dark lg:hidden;
   }
 
   .sidebar {
-    @apply w-[260px] shrink-0 border-r border-border bg-white p-4;
+    @apply w-[250px] shrink-0 border-r border-border bg-white p-4;
   }
 
   .sidebar nav,
@@ -191,7 +153,7 @@
 
   .sidebar a,
   aside nav a {
-    @apply flex items-center gap-3 rounded-2xl px-4 py-3.5 text-sm font-bold text-text-secondary transition-all duration-200 hover:bg-picpay-soft hover:text-picpay-dark;
+    @apply flex items-center gap-3 rounded-2xl px-4 py-3.5 text-sm font-bold text-text-secondary transition-all duration-200 hover:bg-picpay-light hover:text-picpay-dark;
   }
 
   .sidebar a.active,
@@ -199,51 +161,43 @@
     @apply bg-picpay text-white shadow-lg shadow-picpay/15;
   }
 
-  .page {
-    @apply mx-auto w-full max-w-[1440px];
+  main > h1 {
+    @apply mx-auto mb-2 w-full max-w-[1400px];
   }
 
-  .page-header {
-    @apply mb-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between;
+  main > h1 + p {
+    @apply mx-auto mb-8 w-full max-w-[1400px];
   }
 
-  .page-title {
-    @apply text-3xl font-black leading-tight tracking-[-0.055em] sm:text-4xl lg:text-5xl;
+  main > section {
+    @apply mx-auto mb-10 w-full max-w-[1400px];
   }
 
-  .page-description {
-    @apply mt-2 max-w-xl text-sm leading-6 text-text-secondary sm:text-base;
+  main > section > h2 {
+    @apply mb-5;
   }
 
-  .page-eyebrow,
-  .section-eyebrow {
-    @apply mb-2 block text-[11px] font-black uppercase tracking-[0.16em] text-picpay-dark;
-  }
-
-  .picpay-hero {
-    @apply relative mb-10 min-h-[330px] overflow-hidden rounded-[34px] bg-picpay px-7 py-9 text-white sm:px-10 sm:py-12 lg:min-h-[390px] lg:px-14 lg:py-14;
-  }
-
-  .picpay-hero::before {
-    content: "";
-    @apply absolute -right-20 -top-24 size-[330px] rounded-full border-[48px] border-white/10;
-  }
-
-  .picpay-hero::after {
-    content: "";
-    @apply absolute -bottom-40 right-36 size-[300px] rounded-full border-[45px] border-white/10;
-  }
-
-  .picpay-hero h1 {
-    @apply relative z-10 text-4xl font-black leading-[0.93] tracking-[-0.07em] text-white sm:text-5xl lg:text-7xl;
-  }
-
-  .picpay-hero p {
-    @apply relative z-10 mt-5 max-w-lg text-sm leading-6 text-white/80 sm:text-base;
-  }
-
-  .dashboard-grid {
+  section[aria-labelledby="resumo-heading"] {
     @apply grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4;
+  }
+
+  section[aria-labelledby="resumo-heading"] > h2 {
+    @apply col-span-full mb-1;
+  }
+
+  section[aria-labelledby="resumo-heading"] > .card:first-of-type {
+    @apply border-transparent bg-picpay;
+  }
+
+  section[aria-labelledby="resumo-heading"] > .card:first-of-type h2,
+  section[aria-labelledby="resumo-heading"] > .card:first-of-type h3,
+  section[aria-labelledby="resumo-heading"] > .card:first-of-type p,
+  section[aria-labelledby="resumo-heading"] > .card:first-of-type strong {
+    @apply text-white;
+  }
+
+  section[aria-labelledby="resumo-heading"] > .card:first-of-type p {
+    @apply text-white/75;
   }
 
   .card {
@@ -252,7 +206,7 @@
 
   .card h2,
   .card h3 {
-    @apply mb-6 text-sm font-bold tracking-normal text-text-secondary;
+    @apply mb-7 text-sm font-bold tracking-normal text-text-secondary;
   }
 
   .card strong {
@@ -261,20 +215,6 @@
 
   .card p {
     @apply mt-3 text-sm text-text-secondary;
-  }
-
-  .card:first-child {
-    @apply border-transparent bg-picpay;
-  }
-
-  .card:first-child h2,
-  .card:first-child h3,
-  .card:first-child strong {
-    @apply text-white;
-  }
-
-  .card:first-child p {
-    @apply text-white/75;
   }
 
   .charts-grid {
@@ -295,7 +235,7 @@
   }
 
   .chart-gridline {
-    stroke: #e9edea;
+    stroke: #e7ebe8;
     stroke-width: 1;
   }
 
@@ -303,13 +243,13 @@
   .chart-label,
   .chart-legend-label,
   .chart-donut-caption {
-    fill: #667069;
+    fill: #69716c;
     font-size: 12px;
   }
 
   .chart-value,
   .chart-legend-value {
-    fill: #151a17;
+    fill: #171b18;
     font-size: 13px;
     font-weight: 700;
   }
@@ -326,9 +266,29 @@
   }
 
   .chart-donut-total {
-    fill: #151a17;
+    fill: #171b18;
     font-size: 32px;
     font-weight: 900;
+  }
+
+  form {
+    @apply rounded-[28px] border border-border bg-white p-5 shadow-sm sm:p-6 lg:p-8;
+  }
+
+  form > div {
+    @apply mb-5;
+  }
+
+  form > div:last-child {
+    @apply mb-0;
+  }
+
+  form label {
+    @apply text-sm font-bold text-text-primary;
+  }
+
+  form button[type="submit"] {
+    @apply mt-2;
   }
 
   .button,
@@ -338,7 +298,7 @@
 
   .button-secondary,
   .btn-secondary {
-    @apply border-border bg-white text-text-primary shadow-none hover:border-picpay hover:bg-picpay-soft hover:text-picpay-dark;
+    @apply border-border bg-white text-text-primary shadow-none hover:border-picpay hover:bg-picpay-light hover:text-picpay-dark;
   }
 
   .button-danger,
@@ -351,16 +311,6 @@
     @apply flex w-full flex-col gap-2;
   }
 
-  .input-field label,
-  .form-field label {
-    @apply text-sm font-bold text-text-primary;
-  }
-
-  .input,
-  .select {
-    @apply min-h-12 w-full rounded-2xl border border-border bg-white px-4 py-3 text-sm text-text-primary outline-none transition-all duration-200 placeholder:text-gray-400 hover:border-gray-300 focus:border-picpay focus:ring-4 focus:ring-picpay/10;
-  }
-
   .form-grid {
     @apply grid grid-cols-1 gap-5 md:grid-cols-2;
   }
@@ -369,62 +319,64 @@
     @apply mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end;
   }
 
-  .table-container,
-  .table-wrapper {
-    @apply w-full overflow-x-auto rounded-[28px] border border-border bg-white shadow-sm;
+  table {
+    @apply min-w-[900px] w-full border-collapse bg-white text-left;
   }
 
-  .employee-table {
-    @apply min-w-[960px] w-full border-collapse text-left;
-  }
-
-  .employee-table thead {
+  table thead {
     @apply bg-[#f5f7f5];
   }
 
-  .employee-table th {
+  table th {
     @apply px-5 py-4 text-[11px] font-black uppercase tracking-[0.09em] text-text-secondary;
   }
 
-  .employee-table td {
+  table td {
     @apply border-t border-border px-5 py-4 text-sm text-text-primary;
   }
 
-  .employee-table tbody tr {
+  table tbody tr {
     @apply transition-colors hover:bg-[#f8fbf9];
+  }
+
+  section:has(> table),
+  .table-container,
+  .table-wrapper {
+    @apply overflow-x-auto rounded-[28px] border border-border bg-white shadow-sm;
   }
 
   .table-actions {
     @apply flex items-center gap-2;
   }
 
-  .table-actions button {
+  .table-actions button,
+  table button {
     @apply min-h-9 rounded-xl px-3 py-2 text-xs;
   }
 
-  .status-badge,
-  .badge {
+  .badge,
+  .status-badge {
     @apply inline-flex rounded-full px-3 py-1.5 text-xs font-black;
   }
 
-  .status-analysis,
-  .badge-analysis {
-    @apply bg-warning-soft text-warning;
+  .badge-analysis,
+  .status-analysis {
+    @apply bg-warning-light text-warning;
   }
 
-  .status-approved,
-  .badge-approved {
-    @apply bg-success-soft text-success;
+  .badge-approved,
+  .status-approved {
+    @apply bg-success-light text-success;
   }
 
-  .status-rejected,
-  .badge-rejected {
-    @apply bg-error-soft text-error;
+  .badge-rejected,
+  .status-rejected {
+    @apply bg-error-light text-error;
   }
 
-  .status-hired,
-  .badge-hired {
-    @apply bg-[#e6f4ff] text-[#126497];
+  .badge-hired,
+  .status-hired {
+    @apply bg-[#e7f4ff] text-[#146598];
   }
 
   .modal-backdrop {
@@ -447,79 +399,83 @@
     @apply mt-7 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end;
   }
 
-  .state-container,
-  .empty-state {
-    @apply flex min-h-56 flex-col items-center justify-center rounded-[28px] border border-dashed border-border bg-white px-6 py-10 text-center;
-  }
-
-  .state-icon,
-  .empty-state-icon {
-    @apply mb-4 flex size-14 items-center justify-center rounded-2xl bg-picpay-soft text-2xl font-black text-picpay-dark;
-  }
-
-  .state-title {
-    @apply text-lg font-black text-text-primary;
-  }
-
-  .state-description {
-    @apply mt-2 max-w-md text-sm leading-6 text-text-secondary;
-  }
-
-  .state-error .state-icon {
-    @apply bg-error-soft text-error;
-  }
-
-  .state-success .state-icon {
-    @apply bg-success-soft text-success;
-  }
-
   .alert-error {
-    @apply my-5 rounded-2xl border border-red-200 bg-error-soft px-5 py-4 text-sm font-bold text-error;
+    @apply my-5 rounded-2xl border border-red-200 bg-error-light px-5 py-4 text-sm font-bold text-error;
   }
 
   .alert-success {
-    @apply my-5 rounded-2xl border border-green-200 bg-success-soft px-5 py-4 text-sm font-bold text-success;
+    @apply my-5 rounded-2xl border border-green-200 bg-success-light px-5 py-4 text-sm font-bold text-success;
+  }
+
+  .empty-state,
+  .state-container {
+    @apply flex min-h-56 flex-col items-center justify-center rounded-[28px] border border-dashed border-border bg-white px-6 py-10 text-center;
+  }
+
+  .empty-state h3,
+  .state-container h3 {
+    @apply text-lg font-black;
+  }
+
+  .empty-state p,
+  .state-container p {
+    @apply mt-2 max-w-md;
   }
 
   .skeleton {
     @apply animate-pulse bg-[#e2e7e3];
   }
 
-  .skeleton-card {
-    @apply h-44 rounded-[28px];
-  }
-
   .quick-actions {
     @apply grid grid-cols-1 gap-4 md:grid-cols-2;
   }
 
-  .quick-actions a,
-  .quick-action-card {
-    @apply group flex min-h-44 items-end justify-between overflow-hidden rounded-[28px] border border-border bg-white p-6 text-text-primary shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-picpay hover:bg-picpay hover:text-white hover:shadow-xl hover:shadow-picpay/15;
+  .quick-actions a {
+    @apply flex min-h-40 items-end justify-between rounded-[28px] border border-border bg-white p-6 text-xl font-black text-text-primary shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-picpay hover:bg-picpay hover:text-white hover:shadow-xl hover:shadow-picpay/15;
   }
 
-  .quick-actions a strong,
-  .quick-action-card strong {
-    @apply max-w-56 text-xl font-black leading-tight tracking-[-0.04em] sm:text-2xl;
+  section[aria-labelledby="acoes-heading"] {
+    @apply grid grid-cols-1 gap-4 md:grid-cols-2;
   }
 
-  .quick-actions a span,
-  .quick-action-card span {
-    @apply text-picpay-dark transition-colors group-hover:text-white;
+  section[aria-labelledby="acoes-heading"] > h2 {
+    @apply col-span-full mb-1;
+  }
+
+  section[aria-labelledby="acoes-heading"] > a {
+    @apply flex min-h-40 items-end justify-between rounded-[28px] border border-border bg-white p-6 text-xl font-black text-text-primary shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-picpay hover:bg-picpay hover:text-white hover:shadow-xl hover:shadow-picpay/15;
+  }
+
+  section[aria-labelledby="acoes-heading"] > a:first-of-type {
+    @apply bg-picpay text-white;
+  }
+
+  section[aria-labelledby="acoes-heading"] > a:first-of-type:hover {
+    @apply bg-picpay-dark;
+  }
+
+  section[aria-labelledby="graficos-heading"] {
+    @apply grid grid-cols-1 gap-5 xl:grid-cols-2;
+  }
+
+  section[aria-labelledby="graficos-heading"] > h2 {
+    @apply col-span-full mb-1;
   }
 }
 
 @media (max-width: 1023px) {
   .sidebar {
-    @apply fixed inset-y-[74px] left-0 z-40 -translate-x-full transition-transform duration-300;
+    position: fixed;
+    top: 72px;
+    bottom: 0;
+    left: 0;
+    z-index: 40;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
   }
 
   .sidebar.sidebar-open {
-    @apply translate-x-0;
-  }
-
-  .sidebar.sidebar-closed {
-    @apply -translate-x-full;
+    transform: translateX(0);
   }
 }
 
@@ -528,25 +484,19 @@
     @apply p-4;
   }
 
-  .picpay-hero {
-    min-height: 340px;
-  }
-
-  .picpay-hero h1 {
-    font-size: 44px;
-  }
-
-  .dashboard-grid {
+  section[aria-labelledby="resumo-heading"] {
     @apply grid-cols-1;
   }
 
-  .form-actions button {
+  section[aria-labelledby="acoes-heading"] {
+    @apply grid-cols-1;
+  }
+
+  form button {
     @apply w-full;
   }
 
   .modal footer button {
     @apply w-full;
   }
-
-  
 }
